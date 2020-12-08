@@ -4,8 +4,8 @@ frameworkVersion: ">=1.1.0"
 
 provider:
   name: aws
-  runtime: nodejs12.x # python3.6
-  profile: hackathon
+  runtime: python3.8
+  #profile: hackathon
   region: us-east-1
   environment:
     DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
@@ -18,7 +18,19 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
+        - dynamodb:BatchWriteItem
+        - dynamodb:BatchGetItem
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+    - Effect: Allow
+      Action:
+        - s3:ListBucket
+      Resource: "arn:aws:s3:::challenge-bucket"
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:GetObject
+        - s3:DeleteObject
+      Resource: "arn:aws:s3:::challenge-bucket/uploads/*"
 
 functions:
   extractMetadata:
@@ -28,11 +40,53 @@ functions:
     timeout: 30
     events:
       - s3:
-          bucket: bucketname # Escolha o nome do seu bucket que deve ser único
+          bucket: challenge-bucket
           event: s3:ObjectCreated:*
           rules:
             - prefix: uploads/
             - suffix: .jpg
+      - s3:
+          bucket: challenge-bucket
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: uploads/
+            - suffix: .jpeg
+      - s3:
+          bucket: challenge-bucket
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: uploads/
+            - suffix: .png
+      - s3:
+          bucket: challenge-bucket
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: uploads/
+            - suffix: .bmp
+      - s3:
+          bucket: challenge-bucket
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: uploads/
+            - suffix: .tif
+      - s3:
+          bucket: challenge-bucket
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: uploads/
+            - suffix: .tiff
+      - s3:
+          bucket: challenge-bucket
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: uploads/
+            - suffix: .gif
+      - s3:
+          bucket: challenge-bucket
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: uploads/
+            - suffix: .ico
   getMetadata:
     handler: handler.getMetadata
     description:
@@ -40,7 +94,28 @@ functions:
     timeout: 30
     events:
       - http:
-          path: images/{s3objectkey}
+          path: images/uploads/{s3objectkey}
+          method: get
+          cors: true
+  getImage:
+    handler: handler.getImage
+    description:
+    memorySize: 128
+    timeout: 30
+    events:
+      - http:
+          path: images/getImage/uploads/{s3objectkey}
+          method: get
+          cors: true
+          contentHandling: CONVERT_TO_BINARY
+  infoImages:
+    handler: handler.infoImages
+    description:
+    memorySize: 128
+    timeout: 30
+    events:
+      - http:
+          path: images/info
           method: get
           cors: true
 
@@ -61,3 +136,12 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:provider.environment.DYNAMODB_TABLE}
+
+custom:
+  apigwBinary:
+    types:
+      - '*/*'
+plugins:
+  - serverless-python-requirements
+  - serverless-apigw-binary
+  - serverless-apigwy-binary
