@@ -1,11 +1,12 @@
 # serverless-challenge (Luca Carvalho)
-## Minha solução para o desafio da [Solvimm](https://github.com/solvimm/serverless-challenge)
+Minha solução para o desafio da [Solvimm](https://github.com/solvimm/serverless-challenge)
 
-Conteúdo
-========
-    - [Instalação](#-instalação)
-    - [Como usar](#-como-usar)
-    - [Funcionalidades](#-funcionalidades)
+## Conteúdo
+<!--ts-->
+* [Instalação](#instalação)
+* [Como usar](#como-usar)
+* [Funcionalidades](#funcionalidades)
+<!--te-->
 
 ## Instalação
 Esse projeto requer uma conta AWS. Para fazer o seu deployment,
