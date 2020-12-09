@@ -1,12 +1,12 @@
 # serverless-challenge (Luca Carvalho)
 ## Minha solução para o desafio da [Solvimm](https://github.com/solvimm/serverless-challenge)
 
-Conteúdo
-========
+Tabela de conteúdos
+=================
 <!--ts-->
-    * [Instalação](#instalação)
-    * [Como usar](#como-usar)
-    * [Funcionalidade](#funcionalidade)
+    * [Instalação](#-instalação)
+    * [Como usar](#-como-usar)
+    * [Funcionalidades](#-funcionalidades)
 <!--te-->
 
 ## Instalação
@@ -94,7 +94,7 @@ Retorna informações sobre os metadados armazenados. Especificamente, s3objectk
 }
 ```
 
-## Funcionalidade
+## Funcionalidades
 Resumidamente, quando uma imagem é carregada para a pasta 'uploads/' do bucket 'challenge-bucket', uma função do Lambda ('extractMetadata') é chamada. Ela realiza a extração dos metadados da imagem e os salva em uma tabela do DynamoDB.
 Foi implementada uma API REST simples (utilizando o API Gateway) que tem as funcionalidades especificadas acima.
 
