@@ -4,9 +4,9 @@
 Tabela de conteúdos
 =================
 <!--ts-->
-    * [Instalação](#-instalação)
-    * [Como usar](#-como-usar)
-    * [Funcionalidades](#-funcionalidades)
+    - [Instalação](#-instalação)
+    - [Como usar](#-como-usar)
+    - [Funcionalidades](#-funcionalidades)
 <!--te-->
 
 ## Instalação
