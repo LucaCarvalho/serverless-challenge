@@ -3,10 +3,17 @@ Minha solução para o desafio da [Solvimm](https://github.com/solvimm/serverles
 
 ## Conteúdo
 <!--ts-->
+* [Funcionalidades](#funcionalidades)
 * [Instalação](#instalação)
 * [Como usar](#como-usar)
-* [Funcionalidades](#funcionalidades)
 <!--te-->
+
+## Funcionalidades
+Resumidamente, quando uma imagem é carregada para a pasta 'uploads/' do bucket 'challenge-bucket', uma função do Lambda ('extractMetadata') é chamada. Ela realiza a extração dos metadados da imagem e os salva em uma tabela do DynamoDB.
+Foi implementada uma API REST simples (utilizando o API Gateway) que tem as funcionalidades especificadas a seguir.
+
+A ilustração, fornecida com o próprio desafio:
+![Screenshot](Architecture.png)
 
 ## Instalação
 Esse projeto requer uma conta AWS. Para fazer o seu deployment,
@@ -92,10 +99,3 @@ Retorna informações sobre os metadados armazenados. Especificamente, s3objectk
     'input': event
 }
 ```
-
-## Funcionalidades
-Resumidamente, quando uma imagem é carregada para a pasta 'uploads/' do bucket 'challenge-bucket', uma função do Lambda ('extractMetadata') é chamada. Ela realiza a extração dos metadados da imagem e os salva em uma tabela do DynamoDB.
-Foi implementada uma API REST simples (utilizando o API Gateway) que tem as funcionalidades especificadas acima.
-
-A ilustração, fornecida com o próprio desafio:
-![Screenshot](Architecture.png)
