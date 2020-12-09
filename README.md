@@ -43,6 +43,7 @@ Para consultar informações, é necessário realizar requisições GET para um 
 - /images/uploads/{s3objectkey SEM 'uploads/'}
 - /images/getImage/uploads/{s3objectkey SEM 'uploads/'}
 - /images/info
+
 ATENÇÃO: 's3objectkey' NÃO deve conter o prefixo 'uploads/'. Os caminhos acima são os caminhos reais dos
 resources, mas, na prática, como todos os 's3objectkey' armazenados têm o prefixo 'uploads/', os caminhos
 ficam simplesmente (e devem ser tratados como):
@@ -55,6 +56,7 @@ Ou seja, o objeto com s3objectkey='uploads/image.jpg' deve ser passado como '/im
 A seguir, a corpo da resposta de cada uma das requisições (e uma breve descrição):
 
 - /images/{s3objectkey}
+
 Dada uma s3objectkey, são retornados os metadados da imagem correspondente.
 ```
 {
@@ -71,12 +73,14 @@ Dada uma s3objectkey, são retornados os metadados da imagem correspondente.
 ```
 
 - /images/getImage/{s3objectkey}
+
 Dada uma s3objectkey, é retornado o binário da imagem. Contém "Content-Disposition: attachment" no cabeçalho, o que causa o download da mesma caso seja requisitada em browser.
 ```
 (imagem em binário)
 ```
 
 - /images/info
+
 Retorna informações sobre os metadados armazenados. Especificamente, s3objectkey e tamanho da maior e da menor imagem, os tipos de imagem armazenados e a quantidade de cada tipo.
 ```
 {
