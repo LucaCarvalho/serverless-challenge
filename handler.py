@@ -15,7 +15,20 @@ s3 = boto3.resource("s3")
 dynamodbResource = boto3.resource("dynamodb")
 
 def extractMetadata(event, context):
-    #TODO: try - catch
+    """
+    Extrai metadados de objetos carregados no bucket, conforme 'serverless.yml',
+    e salva na tabela de metadados (de nome = variável de ambiente 'DYNAMODB_TABLE').
+
+    Metadados salvos: s3objectkey, size, type, width e height
+
+    Args: 
+        event: deve conter:
+            ["Records"][0]["s3"]["bucket"]["name"]
+            ["Records"][0]["s3"]["object"]["key"]
+            ["Records"][0]["s3"]["object"]["size"]
+        context: não utilizado
+    Retorno: None
+    """
     bucketName = event["Records"][0]["s3"]["bucket"]["name"]
     objectKey = unquote_plus(event["Records"][0]["s3"]["object"]["key"])
     objectSize = event["Records"][0]["s3"]["object"]["size"]
@@ -55,6 +68,30 @@ def extractMetadata(event, context):
 
 
 def getMetadata(event, context):
+    """
+    Retorna uma resposta contendo metadados sobre o item especificado.
+
+    Args:
+        event:
+            Deve conter uma 's3objectkey' dentro de 'pathParameters', com
+            a object key da imagem cujos metadados se quer obter.
+        context: não utilizado
+    Retorno:
+        'response', com 'statusCode' (200, 404, 400 ou 500) adequado,
+        e corpo em JSON contendo uma mensagem, os metadados e o evento
+        que originou a chamada. Formato do corpo:
+        {
+            'message': 'mensagem',
+            's3ObjectMetadata':{
+                's3objectkey': 'uploads/abc.xxx',
+                'size': 123,
+                'width': 123,
+                'height': 123,
+                'type': 'image/xxx'
+            }
+            'input': event
+        }
+    """
     s3ObjectMetadata = {}
 
     try:
@@ -90,6 +127,20 @@ def getMetadata(event, context):
     return response
 
 def getImage(event, context):
+    """
+    Retorna uma resposta contendo a imagem especificada
+
+    Args:
+        event:
+            Deve conter uma 's3objectkey' dentro de 'pathParameters', com
+            a object key da imagem que se deseja obter.
+        context: não utilizado
+    Retorno:
+        'response', com 'statusCode' (200, 400 ou 500) adequado, e corpo
+        em base64 contendo a imagem em si (que será convertido de volta
+        para binário pelo API Gateway), ou em texto contendo uma mensagem
+        (caso a imagem não seja encontrada).
+    """
     contentType = "application/json"
     contentDisposition = "inline"
     isBase64Encoded = False
@@ -127,7 +178,27 @@ def getImage(event, context):
     return response
         
 def infoImages(event, context):
-    stats = ""
+    """
+    Retorna informações sobre as imagens cujos metadados estão armazenados
+
+    Args:
+        event: não utilizado
+        context: não utilizado
+    Retorno:
+        'response', com 'statusCode' (200 ou 500) adequado, e corpo em 
+        JSON, contendo informações sobre a maior imagem, a menor imagem,
+        os tipos de imagens e quantidade de cada tipo. Formato do corpo:
+        {
+            'message': 'mensagem',
+            'stats': {
+                'biggest': {'s3objectkey':'chave', 'size':123}
+                'smallest': {'s3objectkey':'chave', 'size':123}
+                'types: {'type1':123, ..., 'typeN':123}
+            }
+            'input': event
+        }
+    """
+    stats = {}
     try:
         biggest = {"s3objectkey":"", "size":0}
         smallest = {"s3objectkey":"", "size":float("inf")}
