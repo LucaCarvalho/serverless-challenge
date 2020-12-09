@@ -4,9 +4,9 @@
 Conteúdo
 ========
 <!--ts-->
-    *[Instalação](#instalação)
-    *[Como usar](#como-usar)
-    *[Funcionalidade](#funcionalidade)
+    * [Instalação](#instalação)
+    * [Como usar](#como-usar)
+    * [Funcionalidade](#funcionalidade)
 <!--te-->
 
 ## Instalação
