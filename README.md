@@ -60,7 +60,7 @@ ficam simplesmente (e devem ser tratados como):
 Ou seja, o objeto com s3objectkey='uploads/image.jpg' deve ser passado como '/images/uploads/image.jpg', NÃO
 'images/uploads/uploads/image.jpg'.
 
-A seguir, a corpo da resposta de cada uma das requisições (e uma breve descrição):
+### A seguir, o corpo da resposta de cada uma das requisições (e uma breve descrição):
 
 - /images/{s3objectkey}
 
