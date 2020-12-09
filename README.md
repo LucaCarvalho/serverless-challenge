@@ -76,7 +76,7 @@ Dada uma s3objectkey, são retornados os metadados da imagem correspondente.
         'type': 'image/xxx'
     }
     'input': event
-}´
+}
 ```
 
 - /images/getImage/{s3objectkey}
