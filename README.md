@@ -56,6 +56,7 @@ ficam simplesmente (e devem ser tratados como):
 - /images/{s3objectkey}
 - /images/getImage/{s3objectkey}
 - /images/info
+
 Ou seja, o objeto com s3objectkey='uploads/image.jpg' deve ser passado como '/images/uploads/image.jpg', NÃO
 'images/uploads/uploads/image.jpg'.
 
